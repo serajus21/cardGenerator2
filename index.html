@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cardGenerator</title>
+    <!-- layout -->
+    <style>
+        * {margin: 0; padding: 0; box-sizing: border-box; transition: all 250ms ease;}
+        :root {font-size: 16px;}
+        body {display: flex; justify-content: center; align-items: center; height: 100vh;}
+
+        .mode {
+            position: fixed; width: 3em; height: 1.5em; border-radius: 1em; border: 0.2em solid gray; background-color: gray;
+            top: 1em; right: 1em; cursor: pointer; display: flex; 
+        }
+        .switch {
+            width: 50%; height: 100%; background-color: white; border-radius: 1em;
+        }
+
+        .formCard {
+            display: flex; justify-content: center; align-items: center;
+            padding: 0 20em; gap: 4em;
+        }
+        form, .card {
+            width: 100%;
+        }
+        /* form */
+        form {display: flex; flex-direction: column;}
+        input {
+            font-size: 1em; border: none; padding: 0.5em 1em; margin: 0 0 0.5em 0; border-bottom: 0.1em solid; border-radius: 1em;
+        }
+        input[type=submit] {border: none; cursor: pointer; background-color: antiquewhite;} input[type=submit]:hover {background-color: darkgray;}
+        /* card */
+        .card {border-radius: 1em; padding: 0.5em; background-color: aliceblue;}
+        img {
+            width: 100%; height: 15em; border: .1em solid;
+        }
+        .txt {
+            display: block; text-align: right;
+        }
+        .txt--title {font-size: 1.5em; font-weight: bold; margin: 0.5em 0 0.3em 0;}
+        .txt--subtitle {color: gray;}
+        .btns {
+            display: flex; justify-content: space-around; margin: 2em 0;
+        }
+        .btn {font-size: 0.8em; padding: 0.3em 1.1em; border: none; background: transparent; border-radius: 0.5em; cursor: pointer;}
+        .btn--gray {background-color: gray; color: white;}
+        .btn--dark {background-color: black; color: white;}
+        .btn--light {background-color: aliceblue;}
+    </style>
+    <!-- script -->
+    <script>
+        // mode
+        let x=0;
+        function mode() {
+            ++x;
+            if(x%2!=2) {
+                document.getElementById('mode').style.justifyContent="flex-end";
+                document.getElementById('switch').style.backgroundColor="black";
+                document.getElementById('page').style.backgroundColor="rgb(30,30,30)";
+            }
+            if(x%2==0) {
+                document.getElementById('mode').style.justifyContent="flex-start";
+                document.getElementById('switch').style.backgroundColor="white";
+                document.getElementById('page').style.backgroundColor="rgb(240,240,240)";
+            }
+        }
+
+        let cardData= {};
+        function card() {
+            event.preventDefault();
+            cardData = {
+                getSrc : document.getElementById('imgUrl').value,
+                gettitle : document.getElementById('title').value,
+                getSubtitle : document.getElementById('subtitle').value
+            };
+            document.getElementById('img').src=cardData.getSrc;
+            document.getElementById('txt--title').innerHTML=cardData.gettitle;
+            document.getElementById('txt--subtitle').innerHTML=cardData.getSubtitle;
+        }
+
+        function gray() {
+            document.getElementById('card').style.backgroundColor="gray";
+            document.getElementById('txt--title').style.color="black";
+            document.getElementById('txt--subtitle').style.color="white";
+        }
+        function dark() {
+            document.getElementById('card').style.backgroundColor="black";
+            document.getElementById('txt--title').style.color="white";
+            document.getElementById('txt--subtitle').style.color="gray";
+        }
+        function light() {
+            document.getElementById('card').style.backgroundColor="aliceblue";
+            document.getElementById('txt--title').style.color="black";
+            document.getElementById('txt--subtitle').style.color="gray";
+        }
+    </script>
+</head>
+<body id="page">
+    <!-- lightOrDark -->
+    <button class="mode" id="mode" onclick="mode()">
+        <div class="switch" id="switch"></div>
+    </button>
+    <section class="formCard" id="formCard">
+        <!-- form -->
+        <form action="" id="form">
+            <input type="url" id="imgUrl" placeholder="Image URL">
+            <input type="text" id="title" placeholder="Prefered title">
+            <input type="text" id="subtitle" placeholder="Description">
+            <input type="submit" onclick="card()" value="Generate Card">
+        </form>
+        <!-- card -->
+        <div class="card" id="card">
+            <img src="" alt="" id="img">
+            <span class="txt txt--title" id="txt--title">Lorem Ipsum</span>
+            <span class="txt txt--subtitle" id="txt--subtitle">Lorem ipsum dolor sit, amet consectetur adipisicing elit. In repellat excepturi illo harum libero necessitatibus ipsa deserunt maxime odio voluptatibus, reprehenderit provident alias officia. Consectetur magni perferendis eius sint voluptas!</span>
+            <div class="btns" id="btns">
+                <button class="btn btn--gray" onclick="gray()">Gray</button>
+                <button class="btn btn--dark" onclick="dark()">Dark</button>
+                <button class="btn btn--light" onclick="light()">Default</button>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
